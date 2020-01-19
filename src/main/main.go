@@ -1,14 +1,10 @@
-// Copyright 2010 The Go Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file.
-
 package main
 
 import (
 	"html/template"
-	"fmt"
 	"log"
 	"net/http"
+	"fmt"
 	// "io/ioutil"
 	// "regexp"
 )
@@ -17,6 +13,13 @@ import (
 // TODO: port this to JSON/settings file
 type Page struct {
 	Title string
+}
+
+// Serve the Favicon
+// TODO find a way to not have a handler function for this
+func faviconHandler(w http.ResponseWriter, req *http.Request) {
+	fmt.Println("serving favicon")
+	http.ServeFile(w, req, "public/img/favicon.ico")
 }
 
 // Future home of a web based text editor
@@ -33,16 +36,17 @@ func landingHandler(w http.ResponseWriter, req *http.Request) {
 
 // Gather Templates
 // TODO: progamatically gather templates
-var templates = template.Must(template.ParseFiles("tmpl/editor.html", "tmpl/home.html"))
+var templates = template.Must(template.ParseFiles("tmpl/editor.html", "tmpl/home.html", "tmpl/header.html", "tmpl/footer.html"))
 
 func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
-	fmt.Println(tmpl)
 	templates.ExecuteTemplate(w, tmpl+".html", p)	
 }
 
 func main() {
+	http.HandleFunc("/favicon.ico", faviconHandler)
 	http.HandleFunc("/editor/", editorHandler)
 	http.HandleFunc("/", landingHandler)
 
+	fmt.Println("Listening on port 8081")
 	log.Fatal(http.ListenAndServe(":8081", nil))
 }
