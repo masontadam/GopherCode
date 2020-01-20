@@ -1,34 +1,13 @@
 {{template "header.html"}}
     <body>
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <a class="navbar-brand" href="/home">GopherCode</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/editor">Editor<span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://github.com/masontadam/GopherCode.git">Source</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/contactme">Contact Me</a>
-                    </li>
-                </ul>
+        {{template "navbar.html"}}
+        <main role="main" class="container">
+            <div class="starter-template">
+                <h1>Welcome to GopherCode</h1>
+                <a class="btn btn-outline-primary" href="/editor" role="button">Get Started</a>
+                <a class="btn btn-outline-secondary" href="/info" role="button">Learn More</a>
             </div>
-        </nav>
-
-    <main role="main" class="container">
-
-      <div class="starter-template">
-        <h1>Welcome to GopherCode</h1>
-        <a class="btn btn-outline-primary" href="/editor" role="button">Get Started</a>
-        <a class="btn btn-outline-secondary" href="/info" role="button">Learn More</a>
-      </div>
-
-    </main><!-- /.container -->
+        </main><!-- /.container -->
 
 <!-- end body tag in tmpl/footer.html-->
 {{template "footer.html"}}

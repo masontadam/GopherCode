@@ -43,7 +43,7 @@ func infoHandler(w http.ResponseWriter, req *http.Request) {
 // TODO: progamatically gather templates
 var templates = template.Must(template.ParseFiles("tmpl/editor.html",
 	"tmpl/home.html", "tmpl/header.html", "tmpl/footer.html",
-	"tmpl/contactme.html", "tmpl/info.html"))
+	"tmpl/contactme.html", "tmpl/info.html", "tmpl/navbar.html"))
 
 func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
 	templates.ExecuteTemplate(w, tmpl+".html", p)	
