@@ -18,7 +18,6 @@ type Page struct {
 // Serve the Favicon
 // TODO find a way to not have a handler function for this
 func faviconHandler(w http.ResponseWriter, req *http.Request) {
-	fmt.Println("serving favicon")
 	http.ServeFile(w, req, "public/img/favicon.ico")
 }
 
@@ -36,7 +35,7 @@ func landingHandler(w http.ResponseWriter, req *http.Request) {
 
 // Gather Templates
 // TODO: progamatically gather templates
-var templates = template.Must(template.ParseFiles("tmpl/editor.html", "tmpl/home.html", "tmpl/header.html", "tmpl/footer.html"))
+var templates = template.Must(template.ParseFiles("tmpl/editor.html", "tmpl/home.html", "tmpl/header.html", "tmpl/footer.html", "tmpl/contactme.html", "tmpl/info.html"))
 
 func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
 	templates.ExecuteTemplate(w, tmpl+".html", p)	
