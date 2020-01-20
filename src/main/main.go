@@ -15,15 +15,9 @@ type Page struct {
 	Title string
 }
 
-// Serve the Favicon
-// TODO find a way to not have a handler function for this
-func faviconHandler(w http.ResponseWriter, req *http.Request) {
-	http.ServeFile(w, req, "public/img/favicon.ico")
-}
-
 // Future home of a web based text editor
 func editorHandler(w http.ResponseWriter, req *http.Request) {
-	data := Page{"GopherCode"}
+	data := Page{"Text Editor"}
 	renderTemplate(w, "editor", &data)
 }
 
@@ -33,17 +27,35 @@ func landingHandler(w http.ResponseWriter, req *http.Request) {
 	renderTemplate(w, "home", &data)
 }
 
+// Handler for Contact me Page
+func contactmeHandler(w http.ResponseWriter, req *http.Request) {
+	data := Page{"Contact Me"}
+	renderTemplate(w, "contactme", &data)
+}
+
+// Handler for Info Page
+func infoHandler(w http.ResponseWriter, req *http.Request) {
+	data := Page{"Info"}
+	renderTemplate(w, "info", &data)
+}
+
 // Gather Templates
 // TODO: progamatically gather templates
-var templates = template.Must(template.ParseFiles("tmpl/editor.html", "tmpl/home.html", "tmpl/header.html", "tmpl/footer.html", "tmpl/contactme.html", "tmpl/info.html"))
+var templates = template.Must(template.ParseFiles("tmpl/editor.html",
+	"tmpl/home.html", "tmpl/header.html", "tmpl/footer.html",
+	"tmpl/contactme.html", "tmpl/info.html"))
 
 func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
 	templates.ExecuteTemplate(w, tmpl+".html", p)	
 }
 
 func main() {
-	http.HandleFunc("/favicon.ico", faviconHandler)
+	fs := http.FileServer(http.Dir("public"))
+
+  	http.Handle("/public/", http.StripPrefix("/public", fs))
 	http.HandleFunc("/editor/", editorHandler)
+	http.HandleFunc("/contactme/", contactmeHandler)
+	http.HandleFunc("/info/", infoHandler)	
 	http.HandleFunc("/", landingHandler)
 
 	fmt.Println("Listening on port 8081")
